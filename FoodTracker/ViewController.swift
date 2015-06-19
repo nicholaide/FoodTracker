@@ -18,6 +18,29 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        //nil means we are using the existing tableview
+        self.searchController = UISearchController(searchResultsController: nil)
+        
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        
+        //do not "up" into the nav bar; tableview stays as is
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        
+        
+        //setup search bar programmatically
+         //need to update height, but need to include all the dimensions
+        self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0)
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
+        self.searchController.searchBar.delegate = self
+        
+        //ensure that searchresultscontroller is presented in the current controller
+        self.definesPresentationContext = true
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
