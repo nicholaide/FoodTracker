@@ -18,6 +18,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     var suggestedSearchFoods:[String] = []
     var filteredSuggestedSearchFoods:[String] = []
     
+    var scopeButtonTitles = ["Recommended", "Search Results", "Saved"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -38,6 +40,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0)
         
         self.tableView.tableHeaderView = self.searchController.searchBar
+        self.searchController.searchBar.scopeButtonTitles = scopeButtonTitles
         self.searchController.searchBar.delegate = self
         
         //ensure that searchresultscontroller is presented in the current controller
@@ -82,9 +85,26 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     //Mark - UISearchResultsUpdatingDelegate
+    
+    //called when search bar changes
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchString = self.searchController.searchBar.text
+        let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
+        self.filterContentForSearch(searchString, scope: selectedScopeButtonIndex)
+        self.tableView.reloadData()
         
-        
+    }
+    
+    func filterContentForSearch (searchText: String, scope: Int) {
+        self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food : String) -> Bool in
+            //allows for case-insensitive searching
+            var foodMatch = food.lowercaseString.rangeOfString(searchText.lowercaseString)
+            
+            //case-sensitive
+            //var foodMatch = food.rangeOfString(searchText)
+            
+            return foodMatch != nil
+        })
     }
     
     
