@@ -133,7 +133,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         request.HTTPMethod = "POST"
         var params = [
             "appId" : kAppId,
-            "appKey" : kAppKey
+            "appKey" : kAppKey,
             "fields" : ["item_name", "brand_name", "keywords", "usda_fields"],
             "limit" : "50",
             "query" : searchString,
@@ -145,9 +145,15 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
+        //completion handler will run after successful call, just like a thread
+        var task = session.dataTaskWithRequest(request, completionHandler: { (data, response, err) -> Void in
+            
+            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
+            var conversionError: NSError?
+            var jsonDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableLeaves, error: &conversionError) as? NSDictionary // as? means this is an NSDictionary optional
+            println(jsonDictionary)
         
-        
-        
+        })
         
     }
     
