@@ -15,6 +15,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     //can't add this via storyboard, need to be in code
     var searchController:UISearchController!
     
+    var suggestedSearchFoods:[String] = []
+    var filteredSuggestedSearchFoods:[String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -40,6 +43,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         //ensure that searchresultscontroller is presented in the current controller
         self.definesPresentationContext = true
         
+        self.suggestedSearchFoods = ["apple", "bagel", "banana", "beer", "bread", "carrots", "cheddar cheese", "chicken breast", "chili with beans", "chocolate chip cookie", "coffee", "cola", "corn", "egg", "graham cracker", "granola bar", "green beans", "ground beef patty", "hot dog", "ice cream", "jelly doughnut", "ketchup", "milk", "mixed nuts", "mustard", "oatmeal", "orange juice", "peanut butter", "pizza", "pork chop", "potato", "potato chips", "pretzels", "raisins", "ranch salad dressing", "red wine", "rice", "salsa", "shrimp", "spaghetti", "spaghetti sauce", "tuna", "white wine", "yellow cake"]
         
     }
 
@@ -51,16 +55,36 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     //Mark - UI TableView data sourceimeplementating the delegates
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        if self.searchController.active {
+            return self.filteredSuggestedSearchFoods.count
+        }
+        else {
+            return self.suggestedSearchFoods.count
+            
+        }
+        
     }
 
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        //display food, without filtering for now
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
+        var foodName: String
+        if self.searchController.active {
+            foodName = filteredSuggestedSearchFoods[indexPath.row]
+        }
+        else {
+            foodName = suggestedSearchFoods[indexPath.row]
+        }
+        cell.textLabel?.text = foodName
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        return cell
     }
     
     //Mark - UISearchResultsUpdatingDelegate
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-    
+        
+        
     }
     
     
