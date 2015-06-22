@@ -160,10 +160,14 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         })
     }
     
-    // Mark - UISearchBarDelegate
+    // MARK: - UISearchBarDelegate
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchController.searchBar.selectedScopeButtonIndex = 1 //search results  button
         makeRequest(searchBar.text)
+    }
+    
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        self.tableView.reloadData()
     }
     
     func makeRequest (searchString : String) {
