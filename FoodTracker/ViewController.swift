@@ -26,6 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     var scopeButtonTitles = ["Recommended", "Search Results", "Saved"]
 
+    var dataController = DataController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,7 +130,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             makeRequest(searchFoodName)
         }
         else if selectedScopeButtonIndex == 1 {
-            
+            let idValue = apiSearchForFoods[indexPath.row].idValue
+            self.dataController.saveUSDAItemForId(idValue, json: self.jsonResponse)
         }
         else if selectedScopeButtonIndex == 2 {
             
