@@ -15,6 +15,7 @@
 		41E8FEBA1B346BBC00184B4B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41E8FEB81B346BBC00184B4B /* LaunchScreen.xib */; };
 		41E8FEC61B346BBC00184B4B /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8FEC51B346BBC00184B4B /* FoodTrackerTests.swift */; };
 		41E8FED01B346D0C00184B4B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8FECF1B346D0C00184B4B /* DetailViewController.swift */; };
+		41E8FED21B38693200184B4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8FED11B38693200184B4B /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		41E8FEC41B346BBC00184B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41E8FEC51B346BBC00184B4B /* FoodTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackerTests.swift; sourceTree = "<group>"; };
 		41E8FECF1B346D0C00184B4B /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		41E8FED11B38693200184B4B /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				41E8FEAC1B346BBC00184B4B /* AppDelegate.swift */,
+				41E8FED11B38693200184B4B /* DataController.swift */,
 				41E8FEB11B346BBC00184B4B /* ViewController.swift */,
 				41E8FECF1B346D0C00184B4B /* DetailViewController.swift */,
 				41E8FEB31B346BBC00184B4B /* Main.storyboard */,
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41E8FED21B38693200184B4B /* DataController.swift in Sources */,
 				41E8FEB21B346BBC00184B4B /* ViewController.swift in Sources */,
 				41E8FEB01B346BBC00184B4B /* FoodTracker.xcdatamodeld in Sources */,
 				41E8FEAD1B346BBC00184B4B /* AppDelegate.swift in Sources */,
