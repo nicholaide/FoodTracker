@@ -63,6 +63,16 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         self.suggestedSearchFoods = ["apple", "bagel", "banana", "beer", "bread", "carrots", "cheddar cheese", "chicken breast", "chili with beans", "chocolate chip cookie", "coffee", "cola", "corn", "egg", "graham cracker", "granola bar", "green beans", "ground beef patty", "hot dog", "ice cream", "jelly doughnut", "ketchup", "milk", "mixed nuts", "mustard", "oatmeal", "orange juice", "peanut butter", "pizza", "pork chop", "potato", "potato chips", "pretzels", "raisins", "ranch salad dressing", "red wine", "rice", "salsa", "shrimp", "spaghetti", "spaghetti sauce", "tuna", "white wine", "yellow cake"]
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toDetailVCSegue" {
+            if sender != nil {
+                var detailVC = segue.destinationViewController as! DetailViewController
+                detailVC.usdaItem = sender as? USDAItem
+                
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -132,8 +142,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         return cell
     }
     
-    
-
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
@@ -148,11 +156,20 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             makeRequest(searchFoodName)
         }
         else if selectedScopeButtonIndex == 1 {
+            self.performSegueWithIdentifier("toDetailVCSegue", sender: nil)
             let idValue = apiSearchForFoods[indexPath.row].idValue
             self.dataController.saveUSDAItemForId(idValue, json: self.jsonResponse)
         }
         else if selectedScopeButtonIndex == 2 {
-            
+            if self.searchController.active {
+                let usdaItem = filteredFavoritedUSDAItems[indexPath.row]
+                self.performSegueWithIdentifier("toDetailVCSegue", sender: usdaItem)
+            }
+            else {
+                let usdaItem = favoritedUSDAItems[indexPath.row]
+                self.performSegueWithIdentifier("toDetailVCSegue", sender: usdaItem)
+                
+            }
         }
     }
     
