@@ -68,13 +68,27 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
     }
     
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "toDetailVCSegue" {
+//            if sender != nil {
+//                var detailVC = segue.destinationViewController as! DetailViewController
+//                detailVC.usdaItem = sender as? USDAItem
+//            }
+//        }
+//    }
+//    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toDetailVCSegue" {
             if sender != nil {
                 var detailVC = segue.destinationViewController as! DetailViewController
-                detailVC.usdaItem = sender as? USDAItem
-                
+                detailVC.usdaItem = sender
+                println(sender)
+            } else {
+             println("sender is nil in prepareForSegue")
             }
+        }
+        else {
+            println("segue identifier is NOT toDetailVCSegue in prepareForSegue")
         }
     }
 
@@ -188,7 +202,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             else {
                 let usdaItem = favoritedUSDAItems[indexPath.row]
                 self.performSegueWithIdentifier("toDetailVCSegue", sender: usdaItem)
-                
             }
         }
     }
