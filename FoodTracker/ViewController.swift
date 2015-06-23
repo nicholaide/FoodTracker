@@ -32,6 +32,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     //was type [USDAItem], but comments in lectures suggested this change for xcode 6.3
     var favoritedUSDAItems:[AnyObject] = []
     
+    var filteredFavoritedUSDAItems:[AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -84,7 +86,14 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         } else if selectedScopeButtonIndex == 1 {
             return self.apiSearchForFoods.count
         } else {
-            return self.favoritedUSDAItems.count
+            if self.searchController.active {
+                return self.filteredFavoritedUSDAItems.count
+            }
+            else {
+                return self.favoritedUSDAItems.count
+            }
+            
+
         }
         
     }
@@ -107,7 +116,13 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         } else if selectedScopeButtonIndex == 1 {
             foodName = apiSearchForFoods[indexPath.row].name
         } else {
-            foodName = self.favoritedUSDAItems[indexPath.row].name
+            
+            if searchController.active {
+                foodName = self.filteredFavoritedUSDAItems[indexPath.row].name
+            }
+            else {
+                foodName = self.favoritedUSDAItems[indexPath.row].name
+            }
             
         }
         
@@ -154,15 +169,24 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func filterContentForSearch (searchText: String, scope: Int) {
-        self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food : String) -> Bool in
-            //allows for case-insensitive searching
-            var foodMatch = food.lowercaseString.rangeOfString(searchText.lowercaseString)
-            
-            //case-sensitive
-            //var foodMatch = food.rangeOfString(searchText)
-            
-            return foodMatch != nil
-        })
+        if scope == 0 {
+        
+            self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food : String) -> Bool in
+                //allows for case-insensitive searching
+                var foodMatch = food.lowercaseString.rangeOfString(searchText.lowercaseString)
+                
+                //case-sensitive
+                //var foodMatch = food.rangeOfString(searchText)
+                
+                return foodMatch != nil
+            })
+        }
+        else if scope == 2 {
+            self.filteredFavoritedUSDAItems = self.favoritedUSDAItems.filter({ (item: AnyObject) -> Bool in
+                var stringMatch = item.name.lowercaseString.rangeOfString(searchText.lowercaseString)
+                return stringMatch != nil
+            })
+        }
     }
     
     // MARK: - UISearchBarDelegate
