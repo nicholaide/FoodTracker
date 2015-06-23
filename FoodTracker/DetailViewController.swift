@@ -13,10 +13,27 @@ class DetailViewController: UIViewController {
     var usdaItem:USDAItem?
     
     @IBOutlet weak var textView: UITextView!
+    
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "usdaItemDidComplete:", name: kUSDAItemCompleted, object: nil)
+    }
+    
+    func usdaItemDidComplete(notification: NSNotification) {
+        println("usdaItemDidComplete in DetailViewController")
+        usdaItem = notification.object as? USDAItem
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    //because NSNotificationCenter isn't managed by ARC (Automatic Reference Counting).
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
+//other classes will have access to this constant
+let kUSDAItemCompleted = "USDAItemInstanceComplete"
+
 //responsible for post request response, and save info to CoreData
 //converts NSDictionary to an array of tuples
 class DataController {
@@ -164,6 +167,9 @@ class DataController {
                                 }
                             
                                 (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+                               
+                                //for (local) push notification
+                                NSNotificationCenter.defaultCenter().postNotificationName(kUSDAItemCompleted, object: usdaItem)
                             }
                             
                         }
