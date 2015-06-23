@@ -29,7 +29,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
 
     var dataController = DataController()
     
-    var favoritedUSDAItems:[USDAItem] = []
+    //was type [USDAItem], but comments in lectures suggested this change for xcode 6.3
+    var favoritedUSDAItems:[AnyObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
-    //Mark - UI TableView data sourceimeplementating the delegates
+    //MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
@@ -83,10 +84,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         } else if selectedScopeButtonIndex == 1 {
             return self.apiSearchForFoods.count
         } else {
-            return 0 //temporary
+            return self.favoritedUSDAItems.count
         }
-        
-
         
     }
 
@@ -108,7 +107,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         } else if selectedScopeButtonIndex == 1 {
             foodName = apiSearchForFoods[indexPath.row].name
         } else {
-            foodName = ""
+            foodName = self.favoritedUSDAItems[indexPath.row].name
+            
         }
         
 
@@ -118,7 +118,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     
-    //MARK: - UITableViewDelegate
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
@@ -172,6 +172,11 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope == 2 {
+            requestFavoritedUSDAItems()
+        }
+        
+        
         self.tableView.reloadData()
     }
     
