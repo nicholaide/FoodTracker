@@ -30,9 +30,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     var dataController = DataController()
     
     //was type [USDAItem], but comments in lectures suggested this change for xcode 6.3
-    var favoritedUSDAItems:[AnyObject] = []
+    var favoritedUSDAItems:[USDAItem] = [] as [USDAItem]
     
-    var filteredFavoritedUSDAItems:[AnyObject] = []
+    var filteredFavoritedUSDAItems:[USDAItem] = [] as [USDAItem]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +81,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         if segue.identifier == "toDetailVCSegue" {
             if sender != nil {
                 var detailVC = segue.destinationViewController as! DetailViewController
-                detailVC.usdaItem = sender
+                detailVC.usdaItem = sender as? USDAItem
                 println(sender)
             } else {
              println("sender is nil in prepareForSegue")
@@ -232,7 +232,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             })
         }
         else if scope == 2 {
-            self.filteredFavoritedUSDAItems = self.favoritedUSDAItems.filter({ (item: AnyObject) -> Bool in
+            self.filteredFavoritedUSDAItems = self.favoritedUSDAItems.filter({ (item: USDAItem) -> Bool in
                 var stringMatch = item.name.lowercaseString.rangeOfString(searchText.lowercaseString)
                 return stringMatch != nil
             })
